@@ -93,8 +93,7 @@ Tags are produced by the release workflow:
 ## Releases
 
 Create a GitHub release: `.github/workflows/release.yml` builds and pushes a
-multi-arch image (`linux/amd64`, `linux/arm64`) to GHCR. On any push/PR,
-`.github/workflows/ci.yml` builds the image without pushing.
+multi-arch image (`linux/amd64`, `linux/arm64`) to GHCR.
 
 The upstream base version can be overridden per repository with the
 `OPENPROJECT_VERSION` repository variable (default `17`).
