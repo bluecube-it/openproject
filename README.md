@@ -60,10 +60,17 @@ The loop is **disabled by default**. Enable it with:
 | `GMAIL_QUERY`            | `is:unread`                                | Gmail search query                                 |
 | `GMAIL_ALLOW_OVERRIDE`   | –                                          | Let the email override issue attributes, e.g. `type,project` |
 | `GMAIL_PROJECT`          | –                                          | Fixed target project identifier (optional)         |
+| `GMAIL_TYPE`             | –                                          | Default work package type, e.g. `Bug` (optional)   |
 
 The loop exits immediately when `GMAIL_USER_ID` is empty. Either set a fixed
 `GMAIL_PROJECT` or use `GMAIL_ALLOW_OVERRIDE=type,project` so each email can pick
 its own project.
+
+Pinning `GMAIL_PROJECT` and `GMAIL_TYPE` takes them out of `allow_override`, so
+emails can no longer change them. Note that upstream still allows overriding
+`status`, `priority`, `version` (auto-added) and `assignee`, `accountable`,
+dates, hours, custom fields (`override: true` hardcoded); leave
+`GMAIL_ALLOW_OVERRIDE` empty to disable what the task can gate.
 
 > **No credentials are baked into the image.** Mount the service account JSON
 > read-only at runtime:
