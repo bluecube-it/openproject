@@ -54,11 +54,16 @@ The loop is **disabled by default**. Enable it with:
 | Variable                 | Default                                    | Description                                        |
 | ------------------------ | ------------------------------------------ | -------------------------------------------------- |
 | `GMAIL_FETCH_ENABLED`    | `false`                                    | Must be `true` to start the loop                   |
-| `GMAIL_FETCH_INTERVAL`   | `60`                                       | Seconds between each poll                          |
+| `GMAIL_FETCH_INTERVAL`   | `600`                                      | Seconds between each poll                          |
 | `GMAIL_CREDENTIALS_PATH` | `/app/config/gmail-service-account.json`   | Path to the Google service account JSON            |
-| `GMAIL_USER_ID`          | –                                          | OpenProject user id used to receive the emails     |
+| `GMAIL_USER_ID`          | –                                          | Mailbox to impersonate (e.g. `bot@example.com`)    |
 | `GMAIL_QUERY`            | `is:unread`                                | Gmail search query                                 |
-| `GMAIL_PROJECT`          | –                                          | Target OpenProject project identifier              |
+| `GMAIL_ALLOW_OVERRIDE`   | –                                          | Let the email override issue attributes, e.g. `type,project` |
+| `GMAIL_PROJECT`          | –                                          | Fixed target project identifier (optional)         |
+
+The loop exits immediately when `GMAIL_USER_ID` is empty. Either set a fixed
+`GMAIL_PROJECT` or use `GMAIL_ALLOW_OVERRIDE=type,project` so each email can pick
+its own project.
 
 > **No credentials are baked into the image.** Mount the service account JSON
 > read-only at runtime:
@@ -70,8 +75,8 @@ docker run -d --name openproject \
   -e OPENPROJECT_HOST__NAME=openproject.example.com \
   -e OPENPROJECT_HTTPS=false \
   -e GMAIL_FETCH_ENABLED=true \
-  -e GMAIL_USER_ID=1 \
-  -e GMAIL_PROJECT=my-project \
+  -e GMAIL_USER_ID=openproject-bot@example.com \
+  -e GMAIL_ALLOW_OVERRIDE=type,project \
   -v /secure/gmail-service-account.json:/app/config/gmail-service-account.json:ro \
   openproject:local
 ```
