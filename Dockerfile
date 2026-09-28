@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.title="openproject" \
       org.opencontainers.image.licenses="GPL-3.0-or-later"
 
 # Free-enterprise-mode patch (public markasoftware patch, no secret baked in).
-COPY enterprise_token.rb /app/models/enterprise_token.rb
+COPY ./enterprise_token.rb app/models/enterprise_token.rb
 
 # Optional Gmail fetch loop. No credentials are included: the service account
 # JSON must be mounted at runtime (GMAIL_CREDENTIALS_PATH).
