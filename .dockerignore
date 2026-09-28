@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+.gitattributes
+.dockerignore
+README.md
+LICENSE
+
+# Never include credentials in the build context
+gmail-service-account.json
+*.pem
