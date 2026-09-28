@@ -9,6 +9,8 @@ QUERY="${GMAIL_QUERY:-is:unread}"
 ALLOW_OVERRIDE="${GMAIL_ALLOW_OVERRIDE:-}"
 PROJECT="${GMAIL_PROJECT:-}"
 TYPE="${GMAIL_TYPE:-}"
+UNKNOWN_USER="${GMAIL_UNKNOWN_USER:-}"
+NO_PERMISSION_CHECK="${GMAIL_NO_PERMISSION_CHECK:-}"
 
 if [ -z "$USER_ID" ]; then
     echo "[gmail-fetch] GMAIL_USER_ID non impostato, loop disattivato."
@@ -22,6 +24,8 @@ echo "[gmail-fetch] query=$QUERY"
 echo "[gmail-fetch] allow_override=${ALLOW_OVERRIDE:--}"
 echo "[gmail-fetch] project=${PROJECT:--}"
 echo "[gmail-fetch] type=${TYPE:--}"
+echo "[gmail-fetch] unknown_user=${UNKNOWN_USER:--}"
+echo "[gmail-fetch] no_permission_check=${NO_PERMISSION_CHECK:--}"
 echo "[gmail-fetch] interval=$INTERVAL"
 
 while true; do
@@ -36,6 +40,12 @@ while true; do
     fi
     if [ -n "$TYPE" ]; then
         RAKE_ARGS+=(type="$TYPE")
+    fi
+    if [ -n "$UNKNOWN_USER" ]; then
+        RAKE_ARGS+=(unknown_user="$UNKNOWN_USER")
+    fi
+    if [ -n "$NO_PERMISSION_CHECK" ]; then
+        RAKE_ARGS+=(no_permission_check="$NO_PERMISSION_CHECK")
     fi
 
     bundle exec rake redmine:email:receive_gmail "${RAKE_ARGS[@]}" \

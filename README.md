@@ -61,10 +61,17 @@ The loop is **disabled by default**. Enable it with:
 | `GMAIL_ALLOW_OVERRIDE`   | –                                          | Let the email override issue attributes, e.g. `type,project` |
 | `GMAIL_PROJECT`          | –                                          | Fixed target project identifier (optional)         |
 | `GMAIL_TYPE`             | –                                          | Default work package type, e.g. `Bug` (optional)   |
+| `GMAIL_UNKNOWN_USER`     | –                                          | How to handle emails from unknown senders: `ignore` (default), `accept` (as anonymous) or `create` |
+| `GMAIL_NO_PERMISSION_CHECK` | –                                       | Set to `1` to disable permission checks; required together with `GMAIL_UNKNOWN_USER=accept`/`create` |
 
 The loop exits immediately when `GMAIL_USER_ID` is empty. Either set a fixed
 `GMAIL_PROJECT` or use `GMAIL_ALLOW_OVERRIDE=type,project` so each email can pick
 its own project.
+
+By default OpenProject ignores emails whose sender does not match an existing
+account. To let **any** sender open a work package, set
+`GMAIL_UNKNOWN_USER=accept` **and** `GMAIL_NO_PERMISSION_CHECK=1` (`create`
+instead of `accept` also provisions an account for the sender).
 
 Pinning `GMAIL_PROJECT` and `GMAIL_TYPE` takes them out of `allow_override`, so
 emails can no longer change them. Note that upstream still allows overriding
