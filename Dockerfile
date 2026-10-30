@@ -1,4 +1,4 @@
-ARG OPENPROJECT_VERSION=17
+ARG OPENPROJECT_VERSION=17.9.4
 FROM openproject/openproject:${OPENPROJECT_VERSION}
 
 LABEL org.opencontainers.image.title="openproject" \
